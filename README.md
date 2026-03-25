@@ -2,33 +2,80 @@
 
 ## Project Overview
 
-This project implements a machine learning-based power management system for wearable devices that predicts activity transitions and adapts sensor sampling and wireless transmission rates accordingly. By leveraging temporal sequence models (GRU, LSTM, or CNN-LSTM), the system achieves significant energy savings while maintaining high classification accuracy.
+This project implements a machine learning-based power management system for wearable devices that predicts activity transitions and adapts sensor sampling and wireless transmission rates accordingly. By leveraging a Gated Recurrent Unit (GRU) temporal sequence model, the system achieves significant energy savings while maintaining high classification accuracy on real-world wearable sensor data.
 
 ## Problem Statement
 
 Wearable health monitoring devices require continuous sensor sampling and frequent data transmission, consuming substantial battery power. Our approach uses activity prediction to reduce sampling rates and transmission frequency during low-power activities (lying, sitting) while maintaining full monitoring during active states (walking, running). This adaptive strategy can extend device battery life by 20-40%.
 
-## Dataset: PAMAP2
+## Dataset: PAMAP2 Physical Activity Monitoring
 
-The project supports three major activity recognition datasets:
-- **UCI HAR**: 6 activities, 561 features, smartphone sensors
-- **PAMAP2**: 6 activities, ~50 IMU features, multiple sensors
-- **WISDM**: 6 activities, 3-axis accelerometer, smartphone-based
+### Overview
+The **PAMAP2 (Physical Activity Monitoring for Aging People)** dataset is used for this project. It contains real-world wearable sensor data collected from 9 subjects wearing three Inertial Measurement Units (IMUs) at different body locations.
 
-If real data is not available, the system generates synthetic data matching the dataset structure for demonstration purposes.
+### Dataset Characteristics
+- **Subjects**: 9 participants with varying activity patterns
+- **Activities**: 12 distinct activity classes including:
+  - Basic activities: Lying, Sitting, Standing
+  - Locomotion: Walking, Running, Cycling
+  - Exercise: Nordic Walking, Stairs (ascending/descending)
+  - Leisure/Work: Watching TV, Computer Work, Rope Jumping
+  - Transportation: Car Driving
 
-## Model Architecture: GRU
+- **Sensors**: 3 body-mounted IMUs providing:
+  - Chest IMU: 3-axis accelerometer + 3-axis gyroscope
+  - Arm IMU: 3-axis accelerometer + 3-axis gyroscope
+  - Ankle IMU: 3-axis accelerometer + 3-axis gyroscope
+  - Total: ~50 IMU features per timestep
 
-The selected model type is **GRU**. Three architectures are available:
+- **Sampling Rate**: 100 Hz per sensor
+- **Total Samples**: 30,021 time sequences (128 timesteps each)
+- **Data Split**: 70% train (21,014), 10% validation (3,002), 20% test (6,005)
 
-1. **GRU**: Gated Recurrent Unit with LayerNorm and dropout for efficient sequence processing
-2. **LSTM**: Long Short-Term Memory with cell state tracking for longer temporal dependencies
-3. **CNN_LSTM**: Hybrid approach combining convolutional feature extraction with LSTM sequence modeling
+### Why PAMAP2?
+PAMAP2 is ideal for this wearable power management project because:
+1. **Real-world IMU data** from actual wearable devices (not smartphone-based)
+2. **Multiple sensors** enable sophisticated energy analysis per body location
+3. **Diverse activities** provide realistic activity transition scenarios
+4. **High temporal resolution** (100 Hz) captures fine-grained movement patterns
+5. **Longer sequences** allow the model to learn activity transitions effectively
 
-All models:
-- Take sequences of shape [batch_size, sequence_length, n_features]
-- Use the last hidden state for classification
-- Support GPU acceleration (CUDA)
+## Model Architecture: Gated Recurrent Unit (GRU)
+
+### Overview
+The **Gated Recurrent Unit (GRU)** is a simplified variant of LSTM that provides excellent performance for sequential activity recognition while maintaining computational efficiency on wearable devices.
+
+### GRU Architecture Details
+
+**Network Structure:**
+- **Input Layer**: Accepts sequences of shape [batch_size=64, sequence_length=128, features=52]
+- **GRU Layer 1**: 128 hidden units with reset and update gates
+  - Reset gate: Controls how much past information to forget
+  - Update gate: Controls how much new information to keep
+  - Candidate activation: Computes potential new state
+- **GRU Layer 2**: 128 hidden units for deeper temporal feature learning
+- **Layer Normalization**: Applied after each GRU layer for training stability
+- **Dropout (p=0.3)**: Prevents overfitting by randomly deactivating neurons during training
+- **Output Dense Layer**: Maps final hidden state (128 dims) to 12 activity classes
+
+**Why GRU?**
+1. **Efficient**: Fewer parameters than LSTM (2 gates vs 3), reducing inference latency
+2. **Fast convergence**: Trains quickly due to simplified gating mechanism
+3. **GPU optimized**: CUDA kernels available for fast tensor operations
+4. **Parameter efficient**: Less memory footprint suitable for embedded systems
+5. **Temporal learning**: Excellent for capturing activity transition patterns
+
+**Mathematical Operations:**
+- Update gate: $z_t = \sigma(W_z x_t + U_z h_{t-1} + b_z)$
+- Reset gate: $r_t = \sigma(W_r x_t + U_r h_{t-1} + b_r)$
+- Candidate: $\tilde{h}_t = \tanh(W_h x_t + U_h(r_t \odot h_{t-1}) + b_h)$
+- Hidden state: $h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t$
+
+**Key Features:**
+- Takes input sequences of IMU features over time
+- Learns temporal patterns and activity transitions
+- Uses last hidden state as activity representation
+- Supports GPU acceleration for 13.8x faster training
 
 ## Training Process
 
@@ -89,7 +136,7 @@ Embedded System Project/
 |   +-- data_loader.py          # Dataset loading with synthetic fallback
 |   +-- preprocess.py           # Normalization, splitting, windowing
 |   +-- feature_engineering.py  # Statistical & motion features
-|   +-- model.py                # GRU, LSTM, CNN_LSTM architectures
+|   +-- model.py                # GRU model architecture
 |   +-- train.py                # Training loop with early stopping
 |   +-- evaluate.py             # Inference and metrics
 |   +-- energy_simulation.py    # Baseline vs proposed energy calculation
