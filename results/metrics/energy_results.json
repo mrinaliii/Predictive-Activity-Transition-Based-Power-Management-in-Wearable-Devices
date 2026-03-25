@@ -1,0 +1,20 @@
+{
+  "baseline_mJ": 43236.0,
+  "proposed_mJ": 32959.69,
+  "energy_saved_mJ": 10276.31,
+  "savings_pct": 23.77,
+  "per_activity_breakdown": {
+    "CLASS_9": 3949.34,
+    "CLASS_3": 5162.3,
+    "CLASS_10": 5285.04,
+    "CLASS_1": 1607.32,
+    "CLASS_4": 831.76,
+    "CLASS_2": 824.85,
+    "CLASS_5": 685.8,
+    "CLASS_0": 4324.78,
+    "CLASS_6": 4180.38,
+    "CLASS_8": 2447.58,
+    "CLASS_7": 2577.54,
+    "CLASS_11": 1083.0
+  }
+}
