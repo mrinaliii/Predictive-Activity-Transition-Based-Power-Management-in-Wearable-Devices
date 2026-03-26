@@ -56,10 +56,7 @@ data/processed/
 *.npy
 *.npz
 
-# Generated results (regeneratable from code + model)
-results/graphs/*.png
-results/metrics/metrics.json
-results/metrics/energy_results.json
+# Generated logs only (regeneratable)
 results/logs/*.log
 results/logs/*.jsonl
 
