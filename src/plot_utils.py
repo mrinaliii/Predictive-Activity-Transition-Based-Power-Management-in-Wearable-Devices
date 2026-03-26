@@ -36,7 +36,7 @@ def plot_training_curves(history, save_path):
     axes[0].plot(history["val_loss"], marker="s", label="Val Loss", linewidth=2)
     axes[0].set_xlabel("Epoch")
     axes[0].set_ylabel("Loss")
-    axes[0].set_title("Training and Validation Loss")
+    axes[0].set_title("GRU Baseline Training (Core of Orchestrator)")
     axes[0].legend()
     axes[0].grid(True, alpha=0.3)
     
@@ -45,7 +45,7 @@ def plot_training_curves(history, save_path):
     axes[1].plot(history["val_acc"], marker="s", label="Val Accuracy", linewidth=2)
     axes[1].set_xlabel("Epoch")
     axes[1].set_ylabel("Accuracy (%)")
-    axes[1].set_title("Training and Validation Accuracy")
+    axes[1].set_title("GRU Baseline Accuracy (Feeds Orchestrator)")
     axes[1].legend()
     axes[1].grid(True, alpha=0.3)
     
@@ -80,14 +80,14 @@ def plot_confusion_matrix(cm, label_names, save_path):
 
 
 def plot_energy_comparison(energy_results, save_path):
-    """Bar chart: Baseline vs Proposed energy."""
+    """Bar chart: Baseline vs Adaptive Pipeline (Orchestrator) energy."""
     baseline = energy_results["baseline_mJ"]
     proposed = energy_results["proposed_mJ"]
     savings = energy_results["savings_pct"]
     
     fig, ax = plt.subplots(figsize=(8, 6))
     
-    systems = ["Baseline\n(No Prediction)", "Proposed\n(Prediction-Guided)"]
+    systems = ["Baseline\n(All Sensors @ 100 Hz)", "Adaptive Pipeline\n(Orchestrator - Dynamic)"]
     energies = [baseline, proposed]
     colors = ["#ff6b6b", "#51cf66"]
     
@@ -96,13 +96,13 @@ def plot_energy_comparison(energy_results, save_path):
     # Annotate savings
     ax.text(
         0.5, max(energies) * 0.95,
-        f"Energy Savings: {savings:.1f}%",
+        f"Energy Savings (Orchestrator): {savings:.1f}%",
         ha="center", fontsize=14, fontweight="bold",
         bbox=dict(boxstyle="round", facecolor="yellow", alpha=0.7)
     )
     
     ax.set_ylabel("Energy Consumption (mJ)", fontsize=12)
-    ax.set_title("Energy Consumption: Baseline vs Proposed System", fontsize=13, fontweight="bold")
+    ax.set_title("Energy Consumption: Baseline vs Adaptive Pipeline (Orchestrator)", fontsize=13, fontweight="bold")
     ax.set_ylim(0, max(energies) * 1.15)
     
     # Add value labels on bars
@@ -138,7 +138,7 @@ def plot_per_activity_energy(energy_results, save_path):
     bars = ax.barh(activities, energies, color=plt.cm.Set3(np.linspace(0, 1, len(activities))))
     
     ax.set_xlabel("Energy Consumption (mJ)", fontsize=12)
-    ax.set_title("Per-Activity Energy Breakdown (Proposed System)", fontsize=13, fontweight="bold")
+    ax.set_title("Per-Activity Energy Breakdown (Orchestrator - Adaptive Pipeline)", fontsize=13, fontweight="bold")
     
     # Add value labels
     for bar, energy in zip(bars, energies):

@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+src/__pycache__/
 *.py[cod]
 *$py.class
 *.so
@@ -22,47 +23,94 @@ wheels/
 MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
+*.pyc
+.pytest_cache/
 
 # Virtual Environments
 venv/
 ENV/
 env/
 .venv
+venv3/
 
-# IDE
+# IDE & Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
+*.sublime-project
+*.sublime-workspace
 
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb
+.jupyter/
 
-# Large data files
+# Large data files (regeneratable, not needed in repo)
 data/raw/PAMAP2/
 data/raw/UCI_HAR/
 data/raw/WISDM/
 data/processed/
+*.npy
+*.npz
 
-# Model checkpoints (keep best_model.pt, ignore others)
+# Generated results (regeneratable from code + model)
+results/graphs/*.png
+results/metrics/metrics.json
+results/metrics/energy_results.json
+results/logs/*.log
+results/logs/*.jsonl
+
+# Model checkpoints (keep only best model)
 models/temp/
+models/checkpoints/
 *.pt
 !models/saved_models/best_model.pt
+*.pth
+*.pkl
+*.joblib
+
+# Scalers and preprocessors (regeneratable)
+scaler.pkl
+label_encoder.pkl
 
 # Logs and temporary files
 *.log
 *.tmp
 .cache/
-test.py
+temp/
+tmp/
+*.bak
 
 # Environment files
 .env
 .env.local
-config/.env
+.env.*.local
+config/.env*.local
 
-# OS
+# OS Files
 Thumbs.db
 .DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+.directory
+
+# Testing
+test.py
+tests/__pycache__/
+
+# IDE generated
+.vscode/settings.json
+.idea/workspace.xml
+.idea/shelf/
+
+# Miscellaneous
+*.orig
+*.rej
+.mypy_cache/
+.dmypy.json
+dmypy.json
+

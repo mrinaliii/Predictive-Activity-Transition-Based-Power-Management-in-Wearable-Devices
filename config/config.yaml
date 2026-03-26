@@ -1,26 +1,23 @@
 dataset:
-  name: "PAMAP2"           # options: UCI_HAR, PAMAP2, WISDM
-  raw_path: "data/raw/"
-  processed_path: "data/processed/"
+  name: PAMAP2
+  processed_path: data/processed/
+  raw_path: data/raw/
   sequence_length: 128
   test_split: 0.2
   val_split: 0.1
-
 model:
-  type: "GRU"              # options: GRU, LSTM, CNN_LSTM
+  dropout: 0.3
   hidden_size: 128
   num_layers: 2
-  dropout: 0.3
-
+  type: GRU
+paths:
+  energy_results: results/metrics/energy_results.json
+  graphs: results/graphs/
+  logs: results/logs/training.log
+  metrics: results/metrics/metrics.json
+  saved_model: models/saved_models/best_model.pt
 training:
   batch_size: 64
-  learning_rate: 0.001
-  epochs: 50
   early_stopping_patience: 5
-
-paths:
-  saved_model: "models/saved_models/best_model.pt"
-  metrics: "results/metrics/metrics.json"
-  energy_results: "results/metrics/energy_results.json"
-  logs: "results/logs/training.log"
-  graphs: "results/graphs/"
+  epochs: 5
+  learning_rate: 0.001

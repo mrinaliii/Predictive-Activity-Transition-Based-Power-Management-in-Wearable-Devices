@@ -151,3 +151,52 @@ def train_model(model, X_train, y_train, X_val, y_val, config):
     log_file.close()
     
     return history
+
+
+def load_training_history(log_path):
+    """Load training history from JSONL log file.
+    
+    Args:
+        log_path (str or Path): Path to training log file.
+    
+    Returns:
+        dict: History dict with train_loss, val_loss, train_acc, val_acc lists.
+              Returns empty dict if file doesn't exist or is empty.
+    """
+    from pathlib import Path
+    log_path = Path(log_path)
+    
+    if not log_path.exists():
+        return {
+            "train_loss": [],
+            "val_loss": [],
+            "train_acc": [],
+            "val_acc": []
+        }
+    
+    history = {
+        "train_loss": [],
+        "val_loss": [],
+        "train_acc": [],
+        "val_acc": []
+    }
+    
+    try:
+        with open(log_path, "r") as f:
+            for line in f:
+                if line.strip():  # Skip empty lines
+                    entry = json.loads(line)
+                    history["train_loss"].append(entry.get("train_loss", 0))
+                    history["val_loss"].append(entry.get("val_loss", 0))
+                    history["train_acc"].append(entry.get("train_acc", 0))
+                    history["val_acc"].append(entry.get("val_acc", 0))
+    except Exception as e:
+        print(f"Warning: Could not load training history from {log_path}: {e}")
+        return {
+            "train_loss": [],
+            "val_loss": [],
+            "train_acc": [],
+            "val_acc": []
+        }
+    
+    return history
