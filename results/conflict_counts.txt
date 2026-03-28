@@ -1,0 +1,20 @@
+CONFLICT RESOLUTION SUMMARY
+============================================================
+
+Total Windows Processed: 100
+
+Priority Resolution Outcomes:
+------------------------------------------------------------
+Safety Override Wins (Level 1):
+  Count: 0
+  Percentage: 0.00%
+
+Transition Overrides Confidence (Level 2):
+  Count: 0
+  Percentage: 0.00%
+
+Confidence Only (Level 3):
+  Count: 100
+  Percentage: 100.00%
+
+============================================================

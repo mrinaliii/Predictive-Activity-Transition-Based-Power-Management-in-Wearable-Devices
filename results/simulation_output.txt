@@ -1,0 +1,36 @@
+Using device: cuda
+
+[1/7] Loading dataset...
+    Loading subject101.dat... [OK] 247208 samples
+    Loading subject102.dat... [OK] 259128 samples
+    Loading subject103.dat... Traceback (most recent call last):
+  File "D:\Embedded System Project\main.py", line 188, in <module>
+    main(args)
+  File "D:\Embedded System Project\main.py", line 37, in main
+    X, y, label_names = load_dataset(config)
+                        ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Embedded System Project\src\data_loader.py", line 198, in load_dataset
+    result = load_pamap2(raw_path)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Embedded System Project\src\data_loader.py", line 76, in load_pamap2
+    df = pd.read_csv(filepath, delimiter=" ", header=None, dtype={1: int})
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MRINALI\AppData\Roaming\Python\Python312\site-packages\pandas\io\parsers\readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MRINALI\AppData\Roaming\Python\Python312\site-packages\pandas\io\parsers\readers.py", line 626, in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MRINALI\AppData\Roaming\Python\Python312\site-packages\pandas\io\parsers\readers.py", line 1923, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MRINALI\AppData\Roaming\Python\Python312\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/parsers.pyx", line 838, in pandas._libs.parsers.TextReader.read_low_memory
+  File "pandas/_libs/parsers.pyx", line 905, in pandas._libs.parsers.TextReader._read_rows
+  File "pandas/_libs/parsers.pyx", line 874, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "pandas/_libs/parsers.pyx", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "pandas/_libs/parsers.pyx", line 2053, in pandas._libs.parsers.raise_parser_error
+  File "<frozen codecs>", line 331, in getstate
+KeyboardInterrupt

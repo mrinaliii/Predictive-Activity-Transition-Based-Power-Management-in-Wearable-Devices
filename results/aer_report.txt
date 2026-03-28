@@ -1,0 +1,10 @@
+=== Adaptive Efficiency Ratio (AER) Report ===
+Baseline energy    : 43236.0 mJ
+Baseline accuracy  : 98.80%
+Adaptive energy    : 1728.0 mJ
+Adaptive accuracy  : 6.00%
+Energy saved       : 96.00%
+Accuracy retained  : 6.07%
+AER Score          : 0.0583
+Interpretation     : weak
+=============================================

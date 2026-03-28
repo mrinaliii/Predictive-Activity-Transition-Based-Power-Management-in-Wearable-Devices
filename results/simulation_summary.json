@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-03-27T00:59:57.946966",
+  "dataset_info": {
+    "num_windows": 100
+  },
+  "energy_metrics": {
+    "baseline_energy_mj": 1728.0,
+    "adaptive_energy_mj": 1727.9999999999977,
+    "energy_saved_mj": 2.2737367544323206e-12,
+    "energy_saved_percent": 1.3158198810372226e-13
+  },
+  "accuracy_metrics": {
+    "adaptive_accuracy_percent": 6.0
+  },
+  "conflict_resolution": {
+    "safety_override_wins": 0,
+    "transition_overrides_confidence": 0,
+    "confidence_only": 100
+  },
+  "tier_distribution": {
+    "high_percent": 0.0,
+    "medium_percent": 0.0,
+    "low_percent": 100.0
+  },
+  "aer_metrics": {
+    "aer_score": 0.0583,
+    "aer_interpretation": "weak"
+  },
+  "events": {
+    "override_events": 0,
+    "retraining_events": 0
+  }
+}
