@@ -34,7 +34,7 @@ Policy Definition (Parameters: θ_high=0.85, θ_low=0.5, θ_t=0.3, S_trans=75 Hz
 SYSTEM VERIFICATION RESULTS:
   ✓ ConflictResolver: safety_override_wins = 337 (wired correctly)
   ✓ FormalControlPolicy: Full formula table printed (patent-ready)
-  ✓ AdaptiveEfficiencyRatio: AER = 0.7262 (strong interpretation)
+  ✓ AdaptiveEfficiencyRatio: AER = 0.7256 (strong interpretation)
 
 This formal policy is implemented by the FormalControlPolicy class
 and evaluated at each decision cycle in AdaptivePipelineOrchestrator.process_window().
